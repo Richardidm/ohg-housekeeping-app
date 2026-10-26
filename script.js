@@ -2,7 +2,7 @@ let hotelCode = (new URLSearchParams(window.location.search).get("hotel") || "")
 let serviceDate = "";
 let serviceDateObject = null;
 
-const endpoint = "https://REPLACE-WITH-POWER-AUTOMATE-ENDPOINT";
+const endpoint = "https://defaultc6bda84465ac494c971ca79b8611d8.ad.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/29/workflows/61e731c18774429aa39453ac01215b53/triggers/manual/paths/invoke?api-version=1";
 const urlParams = new URLSearchParams(window.location.search);
 const roomFromUrl = (urlParams.get("room") || "").trim();
 
