@@ -84,7 +84,7 @@ function setHotelState() {
   }
 
   hotelError.hidden = true;
-  roomInput.disabled = false;
+  roomInput.disabled = true;
   radioOptions.forEach((radio) => {
     radio.disabled = false;
   });
