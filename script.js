@@ -3,6 +3,8 @@ let serviceDate = "";
 let serviceDateObject = null;
 
 const endpoint = "https://REPLACE-WITH-POWER-AUTOMATE-ENDPOINT";
+const urlParams = new URLSearchParams(window.location.search);
+const prefilledRoom = (urlParams.get("room") || "").trim();
 
 const form = document.getElementById("housekeepingForm");
 const roomInput = document.getElementById("roomNumber");
@@ -86,6 +88,11 @@ function setHotelState() {
   radioOptions.forEach((radio) => {
     radio.disabled = false;
   });
+
+  if (prefilledRoom) {
+    roomInput.value = prefilledRoom.replace(/[^0-9]/g, "").slice(0, 10);
+  }
+
   validateForm();
 }
 
