@@ -100,7 +100,9 @@ function clearStatus() {
   statusMessage.classList.remove("error");
 }
 
-roomInput.addEventListener("input", () => {
+roomInput.addEventListener("input", (event) => {
+  const cleaned = event.target.value.replace(/[^0-9]/g, "").slice(0, 10);
+  event.target.value = cleaned;
   clearStatus();
   validateForm();
 });
@@ -121,7 +123,7 @@ form.addEventListener("submit", async (event) => {
 
   const roomNumber = roomInput.value.trim();
   const selectedRequest = document.querySelector('input[name="requestType"]:checked')?.value;
-  const requestType = selectedRequest === "yes" ? "Housekeeping" : "No housekeeping required";
+  const requestType = selectedRequest || "Full Service";
 
   const payload = {
     hotelCode: hotelCode,
