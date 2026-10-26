@@ -57,9 +57,13 @@ function calculateServiceDate() {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  const dayOffset = now.getHours() < 10 ? 1 : 2;
+  const offsetDays = now.getHours() < 10 ? 1 : 2;
   const nextDate = new Date(today);
-  nextDate.setDate(today.getDate() + dayOffset);
+  nextDate.setDate(today.getDate() + offsetDays);
+
+  while (nextDate.getDay() === 0) {
+    nextDate.setDate(nextDate.getDate() + 1);
+  }
 
   serviceDateObject = nextDate;
   serviceDate = formatISODate(nextDate);
