@@ -4,7 +4,7 @@ let serviceDateObject = null;
 
 const endpoint = "https://REPLACE-WITH-POWER-AUTOMATE-ENDPOINT";
 const urlParams = new URLSearchParams(window.location.search);
-const prefilledRoom = (urlParams.get("room") || "").trim();
+const roomFromUrl = (urlParams.get("room") || "").trim();
 
 const form = document.getElementById("housekeepingForm");
 const roomInput = document.getElementById("roomNumber");
@@ -75,6 +75,8 @@ function calculateServiceDate() {
 function setHotelState() {
   if (!hotelCode) {
     hotelError.hidden = false;
+    roomInput.value = "";
+    roomInput.readOnly = true;
     roomInput.disabled = true;
     radioOptions.forEach((radio) => {
       radio.disabled = true;
@@ -84,14 +86,18 @@ function setHotelState() {
   }
 
   hotelError.hidden = true;
-  roomInput.disabled = true;
+  roomInput.disabled = false;
+  roomInput.readOnly = true;
+
+  if (roomFromUrl) {
+    roomInput.value = roomFromUrl.replace(/[^0-9]/g, "").slice(0, 10);
+  } else {
+    roomInput.value = "";
+  }
+
   radioOptions.forEach((radio) => {
     radio.disabled = false;
   });
-
-  if (prefilledRoom) {
-    roomInput.value = prefilledRoom.replace(/[^0-9]/g, "").slice(0, 10);
-  }
 
   validateForm();
 }
