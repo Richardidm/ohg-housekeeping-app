@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Odyssey Housekeeping</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">O</div>
+          <div class="brand-copy">
+            <p class="eyebrow">Odyssey Hotels</p>
+            <h1>Housekeeping</h1>
+          </div>
+        </div>
+      </header>
+
+      <section class="card">
+        <div id="hotelError" class="hotel-error" role="alert" hidden>
+          Hotel not recognized.<br />
+          Please scan the QR code provided in your room.
+        </div>
+
+        <form id="housekeepingForm" novalidate>
+          <div class="service-date-row">
+            <span class="service-label">Housekeeping service date:</span>
+            <strong id="serviceDateText">-</strong>
+          </div>
+
+          <div class="field">
+            <label for="roomNumber">Room Number</label>
+            <input
+              id="roomNumber"
+              name="roomNumber"
+              type="tel"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              maxlength="10"
+              autocomplete="off"
+              placeholder="405"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label>Housekeeping Request</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="requestType" value="yes" checked />
+                <span>Yes, please schedule housekeeping</span>
+              </label>
+
+              <label class="radio-option">
+                <input type="radio" name="requestType" value="no" />
+                <span>No housekeeping required</span>
+              </label>
+            </div>
+          </div>
+
+          <button id="submitButton" type="submit" class="submit-button">
+            Submit Request
+          </button>
+        </form>
+
+        <div id="statusMessage" class="status-message" hidden></div>
+
+        <div id="successScreen" class="success-screen" hidden>
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h2>Thank you.</h2>
+          <p>Your housekeeping request has been received.</p>
+          <p id="successSummary" class="success-summary"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
