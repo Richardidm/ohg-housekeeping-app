@@ -1,0 +1,23 @@
+<svg width="1200" height="400" viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Moxy Hotels wordmark</title>
+  <desc id="desc">White script Moxy with Hotels below on black background.</desc>
+  <rect width="1200" height="400" fill="#000000"/>
+  <g fill="#ffffff">
+    <text x="600" y="215"
+      text-anchor="middle"
+      font-family="Segoe Print, Bradley Hand, Comic Sans MS, cursive"
+      font-size="220"
+      font-style="italic"
+      font-weight="700"
+      letter-spacing="-22"
+      transform="scale(1 0.92)"
+      style="paint-order:stroke; stroke:transparent;">moxy</text>
+    <text x="600" y="327"
+      text-anchor="middle"
+      font-family="Arial, Helvetica, sans-serif"
+      font-size="58"
+      font-weight="300"
+      letter-spacing="16"
+      fill="#ffffff">HOTELS</text>
+  </g>
+</svg>
