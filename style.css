@@ -52,51 +52,47 @@ button, input {
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px 14px;
+  justify-content: center;
+  padding: 22px 12px 10px;
+  min-height: 180px;
+  background: #000000;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(3px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
-.brand-logo {
-  width: 58px;
-  height: 58px;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(158, 35, 124, 0.32);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.brand-logo svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.brand-copy {
+.brand-wordmark {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
 }
 
-.eyebrow {
-  margin: 0;
-  color: #ffbfd9;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-h1 {
-  margin: 0;
-  font-size: clamp(1.8rem, 1.2rem + 1vw, 2.5rem);
-  line-height: 1.1;
-  letter-spacing: 0.08em;
-  font-weight: 900;
+.moxy-script {
+  display: block;
   color: #ffffff;
+  font-size: clamp(5rem, 18vw, 18rem);
+  line-height: 0.7;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.12em;
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  transform: scaleY(0.92);
+  text-shadow: 0 0 0 transparent;
+  user-select: none;
+}
+
+.moxy-hotels {
+  display: block;
+  margin-top: 10px;
+  color: #ffffff;
+  font-size: clamp(0.9rem, 2vw, 2.2rem);
+  letter-spacing: 0.24em;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .card {
