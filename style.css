@@ -6,8 +6,8 @@
   --muted: #5f5b5c;
   --border: rgba(158, 35, 124, 0.14);
   --shadow: 0 18px 34px rgba(0, 0, 0, 0.16);
-  --moxy-magenta: #9E237C;
-  --moxy-magenta-dark: #73185f;
+  --moxy-magenta: #ff46d7;
+  --moxy-magenta-dark: #d926b4;
   --moxy-black: #141414;
   --moxy-cream: #f9f4f1;
   --success: #1fa866;
@@ -15,6 +15,8 @@
   --error-bg: #fff1f2;
   --error-text: #9f1239;
   --button-disabled: #d6c5d0;
+  --wall-dark: #181818;
+  --wall-rose: rgba(255, 70, 215, 0.22);
 }
 
 * {
@@ -26,14 +28,17 @@ html, body {
   padding: 0;
   min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 70, 215, 0.18), transparent 25%),
+    radial-gradient(circle at 78% 25%, rgba(255, 70, 215, 0.12), transparent 20%),
+    linear-gradient(180deg, #0d0d10 0%, #121214 35%, #1a1a1d 100%);
   color: var(--text);
 }
 
 body {
   display: flex;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 24px 16px 40px;
 }
 
 button, input {
@@ -42,7 +47,7 @@ button, input {
 
 .app-shell {
   width: 100%;
-  max-width: 480px;
+  max-width: 1100px;
 }
 
 .topbar {
@@ -50,15 +55,90 @@ button, input {
 }
 
 .brand {
-  display: block;
-  min-height: 60px;
-  background: #000000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 430px;
+  background:
+    linear-gradient(90deg, rgba(20, 20, 20, 0.5) 0%, rgba(20, 20, 20, 0.76) 32%, rgba(17, 17, 17, 0.96) 100%),
+    linear-gradient(135deg, rgba(255, 70, 215, 0.16), transparent 38%),
+    #0d0d0f;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+}
+
+.brand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, rgba(255, 70, 215, 0.22), transparent 20%, transparent 70%, rgba(255, 70, 215, 0.14)),
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.03) 2px,
+      transparent 2px,
+      transparent 8px
+    );
+  mix-blend-mode: screen;
+}
+
+.brand::after {
+  content: "";
+  position: absolute;
+  right: -6%;
+  top: 0;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 70, 215, 0.22), rgba(255, 70, 215, 0.05) 28%, transparent 60%);
+  transform: skewX(-12deg);
+}
+
+.brand-wordmark {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 58%;
+  padding: 24px 36px 20px;
+  color: #ffffff;
+}
+
+.moxy-script {
+  display: block;
+  color: #ff46d7;
+  font-size: clamp(3.5rem, 9vw, 10rem);
+  line-height: 0.7;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.08em;
+  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
+  text-shadow:
+    0 0 18px rgba(255, 70, 215, 0.9),
+    0 0 36px rgba(255, 70, 215, 0.6),
+    0 0 80px rgba(255, 70, 215, 0.35);
+  transform: scaleY(0.96);
+  white-space: nowrap;
+}
+
+.impact-line {
+  display: block;
+  margin-top: 22px;
+  font-size: clamp(1.8rem, 3vw, 4rem);
+  line-height: 0.95;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.12);
 }
 
 .card {
-  background: linear-gradient(180deg, #ffffff 0%, #fffdfd 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, #fffdfd 100%);
   border: 1px solid rgba(158, 35, 124, 0.18);
   border-radius: 28px;
   box-shadow: var(--shadow);
@@ -284,6 +364,18 @@ input[type="tel"]:disabled {
 
 .hidden {
   display: none !important;
+}
+
+@media (max-width: 700px) {
+  .brand {
+    min-height: 320px;
+  }
+
+  .brand-wordmark {
+    max-width: 80%;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
 }
 
 @media (max-width: 360px) {
