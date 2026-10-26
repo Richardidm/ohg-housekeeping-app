@@ -72,17 +72,17 @@ button, input {
   text-align: center;
 }
 
-.moxy-script {
+.moxy-name {
   display: block;
   margin: 0;
   color: #ffffff;
-  font-size: clamp(4.2rem, 14vw, 11rem);
-  line-height: 0.78;
-  font-weight: 700;
-  font-style: italic;
-  letter-spacing: -0.11em;
-  font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive;
-  transform: scaleY(0.92);
+  font-size: clamp(4rem, 12vw, 9rem);
+  line-height: 0.82;
+  font-weight: 900;
+  font-style: normal;
+  letter-spacing: -0.08em;
+  font-family: Arial, Helvetica, sans-serif;
+  transform: scaleY(0.94);
   transform-origin: center;
   white-space: nowrap;
   user-select: none;
@@ -90,11 +90,11 @@ button, input {
 
 .moxy-location {
   display: block;
-  margin-top: 10px;
+  margin-top: 8px;
   color: #ffffff;
-  font-size: clamp(0.9rem, 2.5vw, 2rem);
+  font-size: clamp(0.85rem, 2.2vw, 1.8rem);
   letter-spacing: 0.18em;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
   font-family: Arial, Helvetica, sans-serif;
 }
