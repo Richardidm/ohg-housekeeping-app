@@ -144,11 +144,11 @@ form.addEventListener("submit", async (event) => {
   const requestType = selectedRequest || "Full Service";
 
   const payload = {
-    hotelCode: hotelCode,
-    roomNumber: roomNumber,
-    requestType: requestType,
-    serviceDate: serviceDate,
-    submittedAt: getLocalTimestamp()
+    HotelCode: hotelCode,
+    RoomNumber: roomNumber,
+    RequestType: requestType,
+    ServiceDate: serviceDate,
+    SubmittedAt: getLocalTimestamp()
   };
 
   submitButton.disabled = true;
