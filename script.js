@@ -1,4 +1,4 @@
-const endpoint = "https://REPLACE-WITH-POWER-AUTOMATE-ENDPOINT";
+const endpoint = "https://defaultc6bda84465ac494c971ca79b8611d8.ad.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/02/workflows/390fb01562a54df1850748cf6ab25e7f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KHbPbjIopV227yU8zcFxNxX5hrmTqoXTrwieLqVqBx8";
 
 let hotelCode = (new URLSearchParams(window.location.search).get("hotel") || "").trim().toUpperCase();
 let serviceDate = "";
