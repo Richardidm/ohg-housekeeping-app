@@ -1,4 +1,4 @@
-const endpoint = "https://defaultc6bda84465ac494c971ca79b8611d8.ad.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/02/workflows/390fb01562a54df1850748cf6ab25e7f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KHbPbjIopV227yU8zcFxNxX5hrmTqoXTrwieLqVqBx8";
+const endpoint = "https://defaultc6bda84465ac494c971ca79b8611d8.ad.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/02/workflows/390fb01562a54df1850748cf6ab25e7f/triggers/manual/paths/invoke?api-version=1.0&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=6oLMA4Vv5e_5v94elG-MxI3hWXkR_xc6vJg0uYnJ3Qo";
 
 let hotelCode = (new URLSearchParams(window.location.search).get("hotel") || "").trim().toUpperCase();
 let serviceDate = "";
@@ -100,17 +100,25 @@ function getLocalTimestamp() {
   );
 }
 
-function calculateServiceDate() {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  const offsetDays = now.getHours() < 10 ? 1 : 2;
-  let nextDate = new Date(today);
-  nextDate.setDate(today.getDate() + offsetDays);
+function getNextAvailableServiceDate(baseDate) {
+  const candidate = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
+  let nextDate = new Date(candidate);
 
   while (nextDate.getDay() === 0 || isHoliday(nextDate)) {
     nextDate.setDate(nextDate.getDate() + 1);
   }
+
+  return nextDate;
+}
+
+function calculateServiceDate() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  const requestedDate = new Date(today);
+  requestedDate.setDate(today.getDate() + (now.getHours() < 10 ? 0 : 1));
+
+  const nextDate = getNextAvailableServiceDate(requestedDate);
 
   serviceDateObject = nextDate;
   serviceDate = formatISODate(nextDate);
