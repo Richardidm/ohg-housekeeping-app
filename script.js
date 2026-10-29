@@ -17,10 +17,13 @@ const successScreen = document.getElementById("successScreen");
 const successSummary = document.getElementById("successSummary");
 const radioOptions = Array.from(document.querySelectorAll('input[name="requestType"]'));
 
+const approvedRooms = new Set([
+  "0019","0021","0023","0027","0029","0031","0033","0035","0037","0039","0041","0043","0045","0047","0049","0051","0053","0055","0057","1001","1003","1004","1005","1006","1007","1008","1009","1010","1011","1012","1015","1016","1017","1019","1021","1023","1027","1029","1031","1032","1033","1034","1035","1036","1037","1038","1039","1040","1041","1042","1043","1044","1045","1046","1047","1048","1049","1051","1053","1055","1057","1058","1059","1060","1061","1062","1063","1064","1065","1066","1067","1068","1069","1070","1071","1072","1073","1075","1077","1079","1081","1083","1084","1085","1086","1087","1088","1089","1090","1091","1092","1093","1094","1095","1096","1097","1098","1099","1100","1101","1103","1105","1107","1109","1111","1115","2047","2049","2051","2053","2055","2057","2058","2059","2060","2061","2062","2063","2064","2065","2066","2067","2068","2069","2070","2071","2072","2073","2075","2077","2079","2081","2083","2084","2085","2086","2087","2088","2089","2090","2091","2092","2093","2094","2095","2096","2097","2098","2099","2100","2101","2103","2105","2107","2109","2111","2115","Z019","Z021","Z023","Z027","Z029","Z031","Z033","Z035","Z037","Z039","Z041","Z042","Z043","Z044","Z045","Z046","Z047","Z048","Z049","Z051","Z053","Z055","Z057","Z058","Z059","Z060","Z061","Z062","Z063","Z064","Z065","Z066","Z067","Z068","Z069","Z070","Z071","Z072","Z073","Z084","Z085","Z086","Z087","Z088","Z089","Z090"
+]);
+
 const allowedRoomsByHotel = {
-  METZINGEN: new Set([
-    "0019","0021","0023","0027","0029","0031","0033","0035","0037","0039","0041","0043","0045","0047","0049","0051","0053","0055","0057","1001","1003","1004","1005","1006","1007","1008","1009","1010","1011","1012","1015","1016","1017","1019","1021","1023","1027","1029","1031","1032","1033","1034","1035","1036","1037","1038","1039","1040","1041","1042","1043","1044","1045","1046","1047","1048","1049","1051","1053","1055","1057","1058","1059","1060","1061","1062","1063","1064","1065","1066","1067","1068","1069","1070","1071","1072","1073","1075","1077","1079","1081","1083","1084","1085","1086","1087","1088","1089","1090","1091","1092","1093","1094","1095","1096","1097","1098","1099","1100","1101","1103","1105","1107","1109","1111","1115","2047","2049","2051","2053","2055","2057","2058","2059","2060","2061","2062","2063","2064","2065","2066","2067","2068","2069","2070","2071","2072","2073","2075","2077","2079","2081","2083","2084","2085","2086","2087","2088","2089","2090","2091","2092","2093","2094","2095","2096","2097","2098","2099","2100","2101","2103","2105","2107","2109","2111","2115","Z019","Z021","Z023","Z027","Z029","Z031","Z033","Z035","Z037","Z039","Z041","Z042","Z043","Z044","Z045","Z046","Z047","Z048","Z049","Z051","Z053","Z055","Z057","Z058","Z059","Z060","Z061","Z062","Z063","Z064","Z065","Z066","Z067","Z068","Z069","Z070","Z071","Z072","Z073","Z084","Z085","Z086","Z087","Z088","Z089","Z090"
-  ])
+  STROO: approvedRooms,
+  METZINGEN: approvedRooms
 };
 
 function pad(value) {
@@ -47,7 +50,7 @@ function normalizeRoomNumber(rawValue) {
 function isRoomAllowedForHotel(hotel, roomValue) {
   const allowedRooms = allowedRoomsByHotel[hotel];
   if (!allowedRooms) {
-    return true;
+    return false;
   }
 
   return allowedRooms.has(roomValue);
@@ -158,7 +161,7 @@ function calculateServiceDate() {
 }
 
 function setHotelState() {
-  if (!hotelCode) {
+  if (!hotelCode || !allowedRoomsByHotel[hotelCode]) {
     hotelError.hidden = false;
     roomInput.value = "";
     roomInput.readOnly = true;
@@ -194,11 +197,11 @@ function showInvalidRoomError() {
 }
 
 function validateForm() {
-  const hasHotel = Boolean(hotelCode);
+  const hasHotel = Boolean(hotelCode) && Boolean(allowedRoomsByHotel[hotelCode]);
   const roomValue = normalizeRoomNumber(roomInput.value);
   const roomHasValue = roomValue.length > 0;
   const roomIsValidFormat = /^[A-Z]?\d{3,4}$/.test(roomValue);
-  const roomIsAllowed = roomHasValue ? isRoomAllowedForHotel(hotelCode, roomValue) : true;
+  const roomIsAllowed = roomHasValue && hasHotel ? isRoomAllowedForHotel(hotelCode, roomValue) : false;
   const requestSelected = radioOptions.some((radio) => radio.checked);
 
   roomInput.value = roomValue;
@@ -243,13 +246,14 @@ radioOptions.forEach((radio) => {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  if (!hotelCode) {
-    return;
-  }
-
   const roomNumber = normalizeRoomNumber(roomInput.value);
   const selectedRequest = document.querySelector('input[name="requestType"]:checked')?.value;
   const requestType = selectedRequest || "Full Service";
+
+  if (!hotelCode || !allowedRoomsByHotel[hotelCode]) {
+    hotelError.hidden = false;
+    return;
+  }
 
   if (!roomNumber || !isRoomAllowedForHotel(hotelCode, roomNumber)) {
     showInvalidRoomError();
