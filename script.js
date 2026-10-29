@@ -187,15 +187,37 @@ function setHotelState() {
   validateForm();
 }
 
+function showInvalidRoomError() {
+  statusMessage.hidden = false;
+  statusMessage.textContent = "invalid room number";
+  statusMessage.classList.add("error");
+}
+
 function validateForm() {
   const hasHotel = Boolean(hotelCode);
   const roomValue = normalizeRoomNumber(roomInput.value);
-  const roomIsValid = /^[A-Z]?\d{3,4}$/.test(roomValue);
-  const roomIsAllowed = isRoomAllowedForHotel(hotelCode, roomValue);
+  const roomHasValue = roomValue.length > 0;
+  const roomIsValidFormat = /^[A-Z]?\d{3,4}$/.test(roomValue);
+  const roomIsAllowed = roomHasValue ? isRoomAllowedForHotel(hotelCode, roomValue) : true;
   const requestSelected = radioOptions.some((radio) => radio.checked);
 
   roomInput.value = roomValue;
-  submitButton.disabled = !(hasHotel && roomIsValid && roomIsAllowed && requestSelected);
+
+  if (roomHasValue && (!roomIsValidFormat || !roomIsAllowed)) {
+    showInvalidRoomError();
+    submitButton.disabled = true;
+    return;
+  }
+
+  if (!roomHasValue) {
+    clearStatus();
+  } else {
+    statusMessage.hidden = true;
+    statusMessage.textContent = "";
+    statusMessage.classList.remove("error");
+  }
+
+  submitButton.disabled = !(hasHotel && roomIsValidFormat && roomIsAllowed && requestSelected);
 }
 
 function clearStatus() {
@@ -228,6 +250,11 @@ form.addEventListener("submit", async (event) => {
   const roomNumber = normalizeRoomNumber(roomInput.value);
   const selectedRequest = document.querySelector('input[name="requestType"]:checked')?.value;
   const requestType = selectedRequest || "Full Service";
+
+  if (!roomNumber || !isRoomAllowedForHotel(hotelCode, roomNumber)) {
+    showInvalidRoomError();
+    return;
+  }
 
   const payload = {
     HotelCode: hotelCode,
